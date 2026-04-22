@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chess-engine</title>
+        <meta charset='UTF-8'>
+        <style>
+            .chess-board { border: 10px solid grey; border-spacing: 1; border-collapse: collapse;}
+            .chess-board th { border: 1px solid}
+            .chess-board td { border: 1px solid; width: 2em; height: 2em; }
+            .chess-board .light { background: #eeeed2; user-select: none;}
+            .chess-board .dark { background: #769656; user-select: none;}
+            .chess-board .can_move { background: #2b68a1; }
+            .chess-board .bot_start { background: #edda04; }
+            .chess-board .bot_end { background: #e09303; }
+            .selected { background: #90d760; }
+            .Div {border: 8px outset darkcyan; background-color: lightblue; text-align: center;}
+            .hide {display:none}
+            .show {display: inline-block}
+        </style>
+        <link rel="stylesheet" href="https://pyscript.net/releases/2026.3.1/core.css">
+        <script type="module" src="https://pyscript.net/releases/2026.3.1/core.js"></script>
+    </head>
+    <body style="background: #36acd3;">
+        <div display:none>
+            <p id="t-7" class="light"></p>
+            <p id="t-6" class="dark"></p>
+            <p id="t-5" class="light"></p>
+            <p id="t-4" class="dark"></p>
+            <p id="t-3" class="light"></p>
+            <p id="t-2" class="dark"></p>
+            <p id="t-1" class="light"></p>
+            <p id="t0" class="dark"></p>
+        </div>
+        
+        <center>
+            <div class="Div" style="display: inline-block">
+                <p></p>
+                <strong style="padding-top:1px; padding-right:30px; padding-bottom:50px; padding-left:30px;" id="load">This site has not yet loaded.</strong>
+                <p></p>
+                <!--<input type="checkbox" checked="True"> Bot On
+                <input type="checkbox" checked="True"> You start as white
+                <p></p>
+            -->
+            </div>
+            <p></p>
+            <span>
+                <strong>
+                <table id="" class='chess-board'>
+                    <tbody>
+                        <tr>
+                            <td id="t1" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b1"></td>
+                            <td id="t2" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b2"></td>
+                            <td id="t3" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b3"></td>
+                            <td id="t4" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b4"></td>
+                            <td id="t5" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b5"></td>
+                            <td id="t6" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b6"></td>
+                            <td id="t7" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b7"></td>
+                            <td id="t8" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b8"></td>
+                        </tr>
+                        <tr>
+                            <td id="t9" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b9"></td>
+                            <td id="t10" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b10"></td>
+                            <td id="t11" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b11"></td>
+                            <td id="t12" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b12"></td>
+                            <td id="t13" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b13"></td>
+                            <td id="t14" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b14"></td>
+                            <td id="t15" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b15"></td>
+                            <td id="t16" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b16"></td>
+                        </tr>
+                        <tr>
+                            <td id="t17" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b17"></td>
+                            <td id="t18" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b18"></td>
+                            <td id="t19" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b19"></td>
+                            <td id="t20" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b20"></td>
+                            <td id="t21" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b21"></td>
+                            <td id="t22" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b22"></td>
+                            <td id="t23" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b23"></td>
+                            <td id="t24" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b24"></td>
+                        </tr>
+                        <tr>
+                            <td id="t25" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b25"></td>
+                            <td id="t26" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b26"></td>
+                            <td id="t27" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b27"></td>
+                            <td id="t28" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b28"></td>
+                            <td id="t29" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b29"></td>
+                            <td id="t30" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b30"></td>
+                            <td id="t31" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b31"></td>
+                            <td id="t32" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b32"></td>
+                        </tr>
+                        <tr>
+                            <td id="t33" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b33"></td>
+                            <td id="t34" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b34"></td>
+                            <td id="t35" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b35"></td>
+                            <td id="t36" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b36"></td>
+                            <td id="t37" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b37"></td>
+                            <td id="t38" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b38"></td>
+                            <td id="t39" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b39"></td>
+                            <td id="t40" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b40"></td>
+                        </tr>
+                        <tr>
+                            <td id="t41" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b41"></td>
+                            <td id="t42" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b42"></td>
+                            <td id="t43" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b43"></td>
+                            <td id="t44" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b44"></td>
+                            <td id="t45" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b45"></td>
+                            <td id="t46" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b46"></td>
+                            <td id="t47" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b47"></td>
+                            <td id="t48" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b48"></td>
+                        </tr>
+                        <tr>
+                            <td id="t49" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b49"></td>
+                            <td id="t50" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b50"></td>
+                            <td id="t51" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b51"></td>
+                            <td id="t52" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b52"></td>
+                            <td id="t53" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b53"></td>
+                            <td id="t54" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b54"></td>
+                            <td id="t55" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b55"></td>
+                            <td id="t56" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b56"></td>                
+                        </tr>
+                        <tr>
+                            <td id="t57" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b57"></td>
+                            <td id="t58" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b58"></td>
+                            <td id="t59" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b59"></td>
+                            <td id="t60" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b60"></td>
+                            <td id="t61" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b61"></td>
+                            <td id="t62" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b62"></td>
+                            <td id="t63" class='light'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b63"></td>
+                            <td id="t64" class='dark'><img draggable="false" style="user-select: none; " src="./Images/EMPTY.png"  width="60" height="60"  id="b64"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                </strong>
+            </span>
+        <p></p>
+        <div id="WPP" class="Div hide" style="height: 60px;" x="", y="">
+            <img id="BISHOP" src="./Images/W-BISHOP.webp" width="60" height="60">
+            <img id="KNIGHT" src="./Images/W-KNIGHT.webp" width="60" height="60">
+            <img id="ROOK" src="./Images/W-ROOK.webp" width="60" height="60">
+            <img id="QUEEN" src="./Images/W-QUEEN.webp" width="60" height="60">
+        </div>
+        <div id="BPP" class="Div hide"  style="height: 60px;" x="", y="">
+            <img id="BISHOP" src="./Images/W-BISHOP.webp" width="60" height="60">
+            <img id="KNIGHT" src="./Images/W-KNIGHT.webp" width="60" height="60">
+            <img id="ROOK" src="./Images/W-ROOK.webp" width="60" height="60">
+            <img id="QUEEN" src="./Images/W-QUEEN.webp" width="60" height="60">
+        </div>
+    </center>
+    <script type="py" src="./demo.py"></script>
+    </body>
+</html>
